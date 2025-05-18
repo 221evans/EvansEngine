@@ -29,7 +29,9 @@ add_subdirectory(external/SDL3_image)
 # Your main executable
 add_executable(${EvansEngine} main.cpp
         Core/game.cpp
-        Core/game.hpp)
+        Core/game.hpp
+        Core/Entities/player.cpp
+        Core/Entities/player.hpp)
 
 # Link against SDL3 and SDL3_image
 target_link_libraries(EvansEngine PRIVATE SDL3::SDL3 SDL3_image::SDL3_image)

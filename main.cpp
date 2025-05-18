@@ -55,7 +55,7 @@ int main()
         // Rendering code goes here
 
         game.GameRender(renderer);
-
+        game.GameUpdate(deltaTime,renderer);
 
         // Update screen
         SDL_RenderPresent(renderer);
