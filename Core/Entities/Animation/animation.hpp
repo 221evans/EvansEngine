@@ -17,10 +17,12 @@ public:
     int frameSpeed;
     int frameCount;
     int totalFrames;
+    bool isAttacking;
     float frameTimer;
 
     void PlayerHandleWalk(bool isWalking, bool isIdle, float deltaTime);
     void PlayerHandleIdle(float deltaTime);
+    void PlayerHandleAttack(bool isAttacking, float deltaTime);
 };
 
 

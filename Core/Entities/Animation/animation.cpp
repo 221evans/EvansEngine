@@ -31,10 +31,12 @@ void Animation::PlayerHandleWalk(bool isWalking, bool isIdle, float deltaTime)
            }
        }
    }
-    else if (isIdle)
+else if (isIdle)
     {
         PlayerHandleIdle(deltaTime);
     }
+
+
 
 
 }
@@ -58,4 +60,5 @@ void Animation::PlayerHandleIdle(float deltaTime)
 
 Animation::~Animation()
 {
+
 }

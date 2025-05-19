@@ -109,6 +109,8 @@ void Player::PlayerUpdate(float deltaTime, SDL_Renderer *renderer)
     bool movingUp = false;
     bool movingDown = false;
     bool movingSide = false;
+
+    bool wasIdle = isIdle;
     
     // Reset animation states
     isWalking = false;
@@ -147,12 +149,23 @@ void Player::PlayerUpdate(float deltaTime, SDL_Renderer *renderer)
         movingSide = true;
     }
 
+    // Track players last direction for idle animation
+    static bool lastMovingUp = false;
+    static bool lastMovingDown = false;
+    static bool lastMovingSide = true;
+
+    // Update last direction if the player is moving
+    if (isWalking)
+    {
+        lastMovingUp = movingUp && !movingDown && !movingSide;
+        lastMovingDown = movingDown && !movingUp && !movingSide;
+        lastMovingSide = movingSide || (movingUp && movingDown);
+    }
+
     // Update animation
     animation.PlayerHandleWalk(isWalking, isIdle, deltaTime);
-    
     // Update source rectangle for animation frame
     srcRect.x = static_cast<float>(animation.currentFrame) * 64;
-
     // Select the appropriate texture based on player state and movement direction
     SDL_Texture *currentTexture = nullptr;
 
@@ -167,7 +180,19 @@ void Player::PlayerUpdate(float deltaTime, SDL_Renderer *renderer)
         }
     } else {
         // Idle
-        currentTexture = playerSideIdleTexture;
+        if (lastMovingUp)
+        {
+            currentTexture = playerUpIdleTexture;
+        }
+        else if (lastMovingDown)
+        {
+            currentTexture = playerDownIdleTexture;
+        }
+        else
+        {
+            currentTexture = playerSideIdleTexture;
+        }
+
     }
 
     // If no texture was selected use default
