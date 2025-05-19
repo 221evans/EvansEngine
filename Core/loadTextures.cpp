@@ -3,7 +3,8 @@
 //
 
 #include "loadTextures.hpp"
-
+#include "SDL3_image/SDL_image.h"
+#include "iostream"
 
 LoadTextures::LoadTextures()
 {
@@ -114,14 +115,17 @@ void LoadTextures::DestroyPlayerTextures()
     }
     if (playerAttackSideTexture != nullptr)
     {
+        SDL_DestroyTexture(playerAttackSideTexture);
         playerAttackSideTexture = nullptr;
     }
     if (playerAttackUpTexture != nullptr)
     {
+        SDL_DestroyTexture(playerAttackUpTexture);
         playerAttackUpTexture = nullptr;
     }
     if (playerAttackDownTexture != nullptr)
     {
+        SDL_DestroyTexture(playerAttackDownTexture);
         playerAttackDownTexture = nullptr;
     }
 }
