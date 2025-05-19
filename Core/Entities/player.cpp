@@ -21,17 +21,23 @@ Player::Player()
     playerUpWalkTexture = nullptr;
     playerDownWalkTexture = nullptr;
 
+
+    playerPosX = 250;
+    playerPosY = 250;
+
     // Rectangles
-    destRect = (SDL_FRect) {250, 250, 64, 64};
+    destRect = (SDL_FRect) {playerPosX, playerPosY, 64, 64};
     srcRect = (SDL_FRect) {0, 0, 64, 64};
 
 
+    isIdle = true;
     isWalking = false;
     isRunning = false;
     isDead = false;
     isFacingLeft = false;
     playerHealth = 100;
     playerSpeed = 100;
+
 }
 
 
@@ -47,7 +53,7 @@ void Player::PlayerInit(SDL_Renderer* renderer)
     playerDownWalkTexture = IMG_LoadTexture(renderer,"Resources/Hunter/Walk/Walk-Down-Sheet.png");
 
 
-    CheckForTextureLoad();
+
 }
 
 
@@ -82,18 +88,12 @@ void Player::CheckForTextureLoad() const
     }
 }
 
-void Player::PlayerRender(SDL_Renderer* renderer) const
+void Player::PlayerRender(SDL_Renderer* renderer, SDL_Texture *currentTexture)
 {
 
     double angle = 0.0;
     SDL_FPoint center = {srcRect.w / 2.0f, srcRect.h / 2.0f};
-
-
     SDL_FlipMode flipMode = SDL_FLIP_NONE;
-
-    SDL_Texture* currentTexture = nullptr;
-
-    currentTexture = playerSideIdleTexture;
 
     if (isFacingLeft)
     {
@@ -105,29 +105,78 @@ void Player::PlayerRender(SDL_Renderer* renderer) const
 
 void Player::PlayerUpdate(float deltaTime, SDL_Renderer *renderer)
 {
+    // Reset movement flags
+    bool movingUp = false;
+    bool movingDown = false;
+    bool movingSide = false;
+    
+    // Reset animation states
+    isWalking = false;
+    isIdle = true;
+
+    // Check keyboard input and update movement
     const bool* keyboardState = SDL_GetKeyboardState(nullptr);
     if (keyboardState[SDL_SCANCODE_W])
     {
         destRect.y -= playerSpeed * deltaTime; // Move Up
-
+        isWalking = true;
+        isIdle = false;
+        movingUp = true;
     }
     if (keyboardState[SDL_SCANCODE_S])
     {
         destRect.y += playerSpeed * deltaTime; // Move Down
-
+        isWalking = true;
+        isIdle = false;
+        movingDown = true;
     }
     if (keyboardState[SDL_SCANCODE_A])
     {
         destRect.x -= playerSpeed * deltaTime; // Move Left
         isFacingLeft = true;
+        isWalking = true;
+        isIdle = false;
+        movingSide = true;
     }
     if (keyboardState[SDL_SCANCODE_D])
     {
         destRect.x += playerSpeed * deltaTime; // Move Right
         isFacingLeft = false;
+        isWalking = true;
+        isIdle = false;
+        movingSide = true;
     }
 
-    PlayerRender(renderer);
+    // Update animation
+    animation.PlayerHandleWalk(isWalking, isIdle, deltaTime);
+    
+    // Update source rectangle for animation frame
+    srcRect.x = static_cast<float>(animation.currentFrame) * 64;
+
+    // Select the appropriate texture based on player state and movement direction
+    SDL_Texture *currentTexture = nullptr;
+
+    if (isWalking) {
+        // Walking textures
+        if (movingUp && !movingDown && !movingSide) {
+            currentTexture = playerUpWalkTexture;
+        } else if (movingDown && !movingUp && !movingSide) {
+            currentTexture = playerDownWalkTexture;
+        } else {
+            currentTexture = playerSideWalkTexture;
+        }
+    } else {
+        // Idle
+        currentTexture = playerSideIdleTexture;
+    }
+
+    // If no texture was selected use default
+    if (currentTexture == nullptr) {
+        currentTexture = playerSideIdleTexture;
+    }
+
+    // Render the player with the selected texture
+    PlayerRender(renderer, currentTexture);
 }
 
 

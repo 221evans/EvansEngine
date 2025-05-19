@@ -31,7 +31,9 @@ add_executable(${EvansEngine} main.cpp
         Core/game.cpp
         Core/game.hpp
         Core/Entities/player.cpp
-        Core/Entities/player.hpp)
+        Core/Entities/player.hpp
+        Core/Entities/Animation/animation.cpp
+        Core/Entities/Animation/animation.hpp)
 
 # Link against SDL3 and SDL3_image
 target_link_libraries(EvansEngine PRIVATE SDL3::SDL3 SDL3_image::SDL3_image)
