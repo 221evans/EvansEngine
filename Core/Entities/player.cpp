@@ -12,16 +12,6 @@
 
 Player::Player()
 {
-    // Idle Textures
-    playerSideIdleTexture = nullptr;
-    playerUpIdleTexture = nullptr;
-    playerDownIdleTexture = nullptr;
-    // Walk Textures
-    playerSideWalkTexture = nullptr;
-    playerUpWalkTexture = nullptr;
-    playerDownWalkTexture = nullptr;
-
-
     playerPosX = 250;
     playerPosY = 250;
 
@@ -40,53 +30,18 @@ Player::Player()
 
 }
 
-
 void Player::PlayerInit(SDL_Renderer* renderer)
 {
-    // Idle
-    playerSideIdleTexture = IMG_LoadTexture(renderer,"Resources/Hunter/Idle/Idle-Side-Sheet.png");
-    playerUpIdleTexture = IMG_LoadTexture(renderer,"Resources/Hunter/Idle/Idle-Up-Sheet.png");
-    playerDownIdleTexture = IMG_LoadTexture(renderer,"Resources/Hunter/Idle/Idle-Down-Sheet.png");
-    // Walk
-    playerSideWalkTexture = IMG_LoadTexture(renderer,"Resources/Hunter/Walk/Walk-Side-Sheet.png");
-    playerUpWalkTexture = IMG_LoadTexture(renderer,"Resources/Hunter/Walk/Walk-Up-Sheet.png");
-    playerDownWalkTexture = IMG_LoadTexture(renderer,"Resources/Hunter/Walk/Walk-Down-Sheet.png");
-
-
-
+  textures.LoadPlayerTextures(renderer);
 }
 
 
 
 void Player::CheckForTextureLoad() const
 {
-    if (playerSideIdleTexture == nullptr)
-    {
-        std::cout << "Player Side Idle Texture is null" << std::endl;
-    }
-
-    if (playerUpIdleTexture == nullptr)
-    {
-        std::cout << "Player Up Idle Texture is null" << std::endl;
-    }
-    if (playerDownIdleTexture == nullptr)
-    {
-        std::cout << "Player Down Idle Texture is null" << std::endl;
-    }
-
-    if (playerSideWalkTexture == nullptr)
-    {
-        std::cout << "Player Side Walk Texture is null" << std::endl;
-    }
-    if (playerUpWalkTexture == nullptr)
-    {
-        std::cout << "Player Up Walk Texture is null" << std::endl;
-    }
-    if (playerDownWalkTexture == nullptr)
-    {
-        std::cout << "Player Down Walk Texture is null" << std::endl;
-    }
+    textures.CheckForTextureLoad();
 }
+
 
 void Player::PlayerRender(SDL_Renderer* renderer, SDL_Texture *currentTexture)
 {
@@ -110,7 +65,7 @@ void Player::PlayerUpdate(float deltaTime, SDL_Renderer *renderer)
     bool movingDown = false;
     bool movingSide = false;
 
-    bool wasIdle = isIdle;
+
     
     // Reset animation states
     isWalking = false;
@@ -172,32 +127,32 @@ void Player::PlayerUpdate(float deltaTime, SDL_Renderer *renderer)
     if (isWalking) {
         // Walking textures
         if (movingUp && !movingDown && !movingSide) {
-            currentTexture = playerUpWalkTexture;
+            currentTexture = textures.playerUpWalkTexture;
         } else if (movingDown && !movingUp && !movingSide) {
-            currentTexture = playerDownWalkTexture;
+            currentTexture = textures.playerDownWalkTexture;
         } else {
-            currentTexture = playerSideWalkTexture;
+            currentTexture = textures.playerSideWalkTexture;
         }
     } else {
         // Idle
         if (lastMovingUp)
         {
-            currentTexture = playerUpIdleTexture;
+            currentTexture = textures.playerUpIdleTexture;
         }
         else if (lastMovingDown)
         {
-            currentTexture = playerDownIdleTexture;
+            currentTexture = textures.playerDownIdleTexture;
         }
         else
         {
-            currentTexture = playerSideIdleTexture;
+            currentTexture = textures.playerSideIdleTexture;
         }
 
     }
 
     // If no texture was selected use default
     if (currentTexture == nullptr) {
-        currentTexture = playerSideIdleTexture;
+        currentTexture = textures.playerSideIdleTexture;
     }
 
     // Render the player with the selected texture
@@ -207,35 +162,5 @@ void Player::PlayerUpdate(float deltaTime, SDL_Renderer *renderer)
 
 Player::~Player()
 {
-    if (playerSideIdleTexture != nullptr)
-    {
-        SDL_DestroyTexture(playerSideIdleTexture);
-        playerSideIdleTexture = nullptr;
-    }
-
-    if (playerUpIdleTexture != nullptr)
-    {
-        SDL_DestroyTexture(playerUpIdleTexture);
-        playerUpIdleTexture = nullptr;
-    }
-    if (playerDownIdleTexture != nullptr)
-    {
-        SDL_DestroyTexture(playerDownIdleTexture);
-        playerDownIdleTexture = nullptr;
-    }
-    if (playerSideWalkTexture != nullptr)
-    {
-        SDL_DestroyTexture(playerSideWalkTexture);
-        playerSideWalkTexture = nullptr;
-    }
-    if (playerUpWalkTexture != nullptr)
-    {
-        SDL_DestroyTexture(playerUpWalkTexture);
-        playerUpWalkTexture = nullptr;
-    }
-    if (playerDownWalkTexture != nullptr)
-    {
-        SDL_DestroyTexture(playerDownWalkTexture);
-        playerDownWalkTexture = nullptr;
-    }
+    textures.DestroyPlayerTextures();
 }

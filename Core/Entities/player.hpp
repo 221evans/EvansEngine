@@ -6,7 +6,7 @@
 #define PLAYER_HPP
 #include "SDL3/SDL.h"
 #include "Animation/animation.hpp"
-
+#include "../loadTextures.hpp"
 class Player {
 
 public:
@@ -14,16 +14,8 @@ public:
     ~Player();
 
     Animation animation;
+    LoadTextures textures;
 
-    // Idle Textures
-    SDL_Texture *playerSideIdleTexture;
-    SDL_Texture *playerUpIdleTexture;
-    SDL_Texture *playerDownIdleTexture;
-
-    // Walk Textures
-    SDL_Texture *playerSideWalkTexture;
-    SDL_Texture *playerUpWalkTexture;
-    SDL_Texture *playerDownWalkTexture;
 
     // Rectangles
 
