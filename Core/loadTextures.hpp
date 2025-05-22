@@ -28,9 +28,18 @@ class LoadTextures {
     SDL_Texture *playerAttackUpTexture;
     SDL_Texture *playerAttackDownTexture;
 
+    // Enemy Idle Textures
+    SDL_Texture *zombieBaseIdleTexture;
+    SDL_Texture *zombieBansheeIdleTexture;
+    SDL_Texture *zombieOverweightIdleTexture;
+
     void LoadPlayerTextures(SDL_Renderer *renderer);
-    void CheckForTextureLoad() const;
+    void CheckForPlayerTextureLoad() const;
     void DestroyPlayerTextures();
+
+    void LoadEnemyTextures(SDL_Renderer *renderer);
+    void CheckForEnemyLoadTextures() const;
+    void DestroyEnemyTextures();
 };
 
 

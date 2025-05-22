@@ -35,7 +35,10 @@ add_executable(${EvansEngine} main.cpp
         Core/Entities/Animation/animation.cpp
         Core/Entities/Animation/animation.hpp
         Core/loadTextures.cpp
-        Core/loadTextures.hpp)
+        Core/loadTextures.hpp
+        Core/Entities/enemy.cpp
+        Core/Entities/enemy.hpp
+)
 
 # Link against SDL3 and SDL3_image
 target_link_libraries(EvansEngine PRIVATE SDL3::SDL3 SDL3_image::SDL3_image)

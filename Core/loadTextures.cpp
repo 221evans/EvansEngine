@@ -20,6 +20,11 @@ LoadTextures::LoadTextures()
     playerAttackSideTexture = nullptr;
     playerAttackUpTexture = nullptr;
     playerAttackDownTexture = nullptr;
+
+    // Enemy Idle
+    zombieBaseIdleTexture = nullptr;
+    zombieBansheeIdleTexture = nullptr;
+    zombieOverweightIdleTexture = nullptr;
 }
 
 void LoadTextures::LoadPlayerTextures(SDL_Renderer* renderer)
@@ -38,7 +43,31 @@ void LoadTextures::LoadPlayerTextures(SDL_Renderer* renderer)
     playerAttackDownTexture = IMG_LoadTexture(renderer, "Resources/Hunter/Attack/Slice-Down-Sheet.png");
 }
 
-void LoadTextures::CheckForTextureLoad() const
+void LoadTextures::LoadEnemyTextures(SDL_Renderer *renderer)
+{
+    zombieBaseIdleTexture = IMG_LoadTexture(renderer, "Resources/Zombie/Idle/Zombie-Base-Idle-Sheet.png");
+    zombieBansheeIdleTexture = IMG_LoadTexture(renderer, "Resources/Zombie/Idle/Zombie-Banshee-Idle-Sheet.png");
+    zombieOverweightIdleTexture = IMG_LoadTexture(renderer, "Resources/Zombie/Idle/Zombie-Overweight-Idle-Sheet.png");
+}
+
+void LoadTextures::CheckForEnemyLoadTextures() const
+{
+    if (zombieBaseIdleTexture == nullptr)
+    {
+        std::cout << "Zombie Base Idle Texture is null" << std::endl;
+    }
+    if (zombieBansheeIdleTexture == nullptr)
+    {
+        std::cout << "Zombie Banshee Idle Texture is null" << std::endl;
+    }
+    if (zombieOverweightIdleTexture == nullptr)
+    {
+        std::cout << "Zombie Overweight Idle Texture is null" << std::endl;
+    }
+}
+
+
+void LoadTextures::CheckForPlayerTextureLoad() const
 {
     if (playerSideIdleTexture == nullptr)
     {
@@ -129,5 +158,26 @@ void LoadTextures::DestroyPlayerTextures()
         playerAttackDownTexture = nullptr;
     }
 }
+
+void LoadTextures::DestroyEnemyTextures()
+{
+    if (zombieBaseIdleTexture != nullptr)
+    {
+        SDL_DestroyTexture(zombieBaseIdleTexture);
+        zombieBaseIdleTexture = nullptr;
+    }
+    if (zombieBansheeIdleTexture != nullptr)
+    {
+        SDL_DestroyTexture(zombieBansheeIdleTexture);
+        zombieBansheeIdleTexture = nullptr;
+    }
+    if (zombieOverweightIdleTexture != nullptr)
+    {
+        SDL_DestroyTexture(zombieOverweightIdleTexture);
+        zombieOverweightIdleTexture = nullptr;
+    }
+}
+
+
 
 

@@ -18,7 +18,6 @@ public:
 
 
     // Rectangles
-
     SDL_FRect destRect{};
     SDL_FRect srcRect{};
 
@@ -43,7 +42,7 @@ public:
 
 
 private:
-    void PlayerRender(SDL_Renderer *renderer, SDL_Texture *currentTexture);
+    void PlayerRender(SDL_Renderer *renderer, SDL_Texture *currentTexture) const;
 
 };
 

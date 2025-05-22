@@ -18,10 +18,11 @@ void Game::GameInit(SDL_Renderer *renderer)
 
     texture = IMG_LoadTexture(renderer,"Resources/Background/BackgroundImage.png");
     player.PlayerInit(renderer);
+    enemy.Init(renderer);
 }
 
 
-void Game::GameRender(SDL_Renderer *renderer)
+void Game::GameRender(SDL_Renderer *renderer) const
 {
     SDL_RenderTexture(renderer, texture, nullptr, nullptr);
 
@@ -35,6 +36,7 @@ void Game::GameRender(SDL_Renderer *renderer)
 void Game::GameUpdate(float deltaTime, SDL_Renderer *renderer)
 {
     player.PlayerUpdate(deltaTime,renderer);
+    enemy.Update(renderer,deltaTime);
 }
 
 Game::~Game()

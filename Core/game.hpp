@@ -6,6 +6,7 @@
 #define GAME_HPP
 
 #include "Entities/player.hpp"
+#include "Entities/enemy.hpp"
 #include "SDL3/SDL.h"
 #include "SDL3_image/SDL_image.h"
 
@@ -17,13 +18,14 @@ class Game {
         ~Game();
 
     Player player;
+    Enemy enemy;
 
     // Variables
     SDL_Texture *texture;
 
     // Functions
     void GameInit(SDL_Renderer *renderer);
-    void GameRender(SDL_Renderer *renderer);
+    void GameRender(SDL_Renderer *renderer) const;
     void GameUpdate(float deltaTime, SDL_Renderer *renderer);
 
     private:

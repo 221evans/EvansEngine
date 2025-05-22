@@ -4,12 +4,6 @@
 
 #include "player.hpp"
 
-#include <iostream>
-#include <__ostream/basic_ostream.h>
-
-#include "SDL3_image/SDL_image.h"
-
-
 Player::Player()
 {
     playerPosX = 250;
@@ -39,11 +33,11 @@ void Player::PlayerInit(SDL_Renderer* renderer)
 
 void Player::CheckForTextureLoad() const
 {
-    textures.CheckForTextureLoad();
+    textures.CheckForPlayerTextureLoad();
 }
 
 
-void Player::PlayerRender(SDL_Renderer* renderer, SDL_Texture *currentTexture)
+void Player::PlayerRender(SDL_Renderer* renderer, SDL_Texture *currentTexture) const
 {
 
     double angle = 0.0;
@@ -107,14 +101,13 @@ void Player::PlayerUpdate(float deltaTime, SDL_Renderer *renderer)
     // Track players last direction for idle animation
     static bool lastMovingUp = false;
     static bool lastMovingDown = false;
-    static bool lastMovingSide = true;
+
 
     // Update last direction if the player is moving
     if (isWalking)
     {
         lastMovingUp = movingUp && !movingDown && !movingSide;
         lastMovingDown = movingDown && !movingUp && !movingSide;
-        lastMovingSide = movingSide || (movingUp && movingDown);
     }
 
     // Update animation
