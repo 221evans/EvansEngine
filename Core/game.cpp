@@ -22,10 +22,15 @@ void Game::GameInit(SDL_Renderer *renderer)
 }
 
 
-void Game::GameRender(SDL_Renderer *renderer) const
+void Game::GameRender(SDL_Renderer *renderer)
 {
+    int gemX = 260;
+    int gemY = 260;
     SDL_RenderTexture(renderer, texture, nullptr, nullptr);
 
+    // Temporary for now
+    SDL_SetRenderDrawColor(renderer, 173, 216, 230, 1); // Light blue
+    gem.DropGem(renderer, gemX, gemY, 2);
 
     if (texture == nullptr)
     {

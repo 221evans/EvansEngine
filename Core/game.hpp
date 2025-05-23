@@ -8,6 +8,7 @@
 #include "Entities/player.hpp"
 #include "Entities/enemy.hpp"
 #include "SDL3/SDL.h"
+#include "../Core/gem.hpp"
 #include "SDL3_image/SDL_image.h"
 
 
@@ -19,13 +20,14 @@ class Game {
 
     Player player;
     Enemy enemy;
+    Gem gem;
 
     // Variables
     SDL_Texture *texture;
 
     // Functions
     void GameInit(SDL_Renderer *renderer);
-    void GameRender(SDL_Renderer *renderer) const;
+    void GameRender(SDL_Renderer *renderer);
     void GameUpdate(float deltaTime, SDL_Renderer *renderer);
 
     private:

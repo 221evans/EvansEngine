@@ -38,6 +38,8 @@ add_executable(${EvansEngine} main.cpp
         Core/loadTextures.hpp
         Core/Entities/enemy.cpp
         Core/Entities/enemy.hpp
+        Core/gem.cpp
+        Core/gem.hpp
 )
 
 # Link against SDL3 and SDL3_image
